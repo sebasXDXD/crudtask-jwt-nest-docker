@@ -16,7 +16,6 @@ import { AuthModule } from './auth/auth.module';
     database: 'task_db',
     autoLoadEntities: true,
     synchronize: true,
-
   }),TasksModule, TasksTypesModule, UsersModule, AuthModule],
   controllers: [],
   providers: [],

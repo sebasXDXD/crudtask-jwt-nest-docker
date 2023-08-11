@@ -4,7 +4,8 @@ import { UpdateTaskDto } from './dto/update-task.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Task } from './entities/task.entity';
 import { Repository } from 'typeorm';
-import { TasksType } from 'src/tasks_types/entities/tasks_type.entity';
+import { TasksType } from '../tasks_types/entities/tasks_type.entity';
+import { UserActiveI } from '../common/interfaces/user-active.interface';
 
 @Injectable()
 export class TasksService {
@@ -16,13 +17,13 @@ export class TasksService {
   ) { }
 
 
-  async create(createTaskDto: CreateTaskDto) {
+  async create(createTaskDto: CreateTaskDto,user:UserActiveI) {
     try {
       const taskType = await this.taskTypeRepository.findOneBy({ id: createTaskDto.id_type })
       if (!taskType) {
         throw new BadRequestException("task type not found");
       }
-      return await this.taskRepository.save({ ...createTaskDto, taskType });
+      return await this.taskRepository.save({ ...createTaskDto, taskType, userEmail:user.email});
     } catch (error) {
       console.log(error);
     }

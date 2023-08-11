@@ -2,7 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { TasksTypesService } from './tasks_types.service';
 import { CreateTasksTypeDto } from './dto/create-tasks_type.dto';
 import { UpdateTasksTypeDto } from './dto/update-tasks_type.dto';
-
+import { Auth } from '../auth/decorators/auth.decorator';
+import { Role } from '../common/enums/rol.enum';
+@Auth(Role.ADMIN)
 @Controller('tasks-types')
 export class TasksTypesController {
   constructor(private readonly tasksTypesService: TasksTypesService) {}

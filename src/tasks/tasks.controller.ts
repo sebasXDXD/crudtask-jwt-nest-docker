@@ -2,14 +2,18 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
-
+import { Role } from '../common/enums/rol.enum';
+import { Auth } from '../auth/decorators/auth.decorator';
+import { UserActiveI } from '../common/interfaces/user-active.interface';
+import { ActiveUser } from '../common/decorators/active-user.decorator';
+@Auth(Role.USER)
 @Controller('tasks')
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
   @Post()
-  create(@Body() createTaskDto: CreateTaskDto) {
-    return this.tasksService.create(createTaskDto);
+  create(@Body() createTaskDto: CreateTaskDto,@ActiveUser() user:UserActiveI) {
+    return this.tasksService.create(createTaskDto, user);
   }
 
   @Get()
