@@ -1,16 +1,14 @@
 version: "3.8"
 services:
-  mysql:
-    image: mysql:8.0
-    container_name: mysql_db
+  postgres:
+    image: postgres:14.1-alpine
+    container_name: postgres_db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: task_db
-      MYSQL_USER: sebas_cruds
-      MYSQL_PASSWORD: root
-      MYSQL_REQUIRE_SECURE_TRANSPORT: "0"
+      POSTGRES_USER: sebas_cruds
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: task_db
     volumes:
-      - ./mysql:/var/lib/mysql
+      - ./postgres:/var/lib/postgresql/data
     ports:
-      - "3306:3306"
+      - "5432:5432"
