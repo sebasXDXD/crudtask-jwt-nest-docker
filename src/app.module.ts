@@ -13,16 +13,18 @@ import { ConfigModule } from '@nestjs/config';
       isGlobal: true, // Cargar las variables de entorno globalmente
     }),
     TypeOrmModule.forRoot({
-    type:'postgres',
-    host: process.env.DATABASE_HOST,
-    port: parseInt(process.env.DATABASE_PORT),
-    username:process.env.DATABASE_USERNAME,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE_NAME,
-    autoLoadEntities: true,
-    synchronize: true,
-  }),TasksModule, TasksTypesModule, UsersModule, AuthModule],
+      type: 'postgres',
+      host: process.env.DATABASE_HOST,
+      port: parseInt(process.env.DATABASE_PORT),
+      username: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
+      autoLoadEntities: true,
+      synchronize: true,
+      ssl: process.env.POSTGRESS_SSL === 'true',
+      extra: { ssl: process.env.POSTGRESS_SSL === 'true' ? { rejectUnauthorized: false } : null }
+    }), TasksModule, TasksTypesModule, UsersModule, AuthModule],
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule { }
